@@ -1,0 +1,107 @@
+<view class="page-add">
+  <!-- 预览气泡 -->
+  <view class="preview-area">
+    <view class="preview-bubble" style="background: {{bubbleColor}};">
+      <text class="preview-text">{{name || '习惯'}}</text>
+    </view>
+  </view>
+
+  <!-- 表单区域 -->
+  <view class="form-area {{formReady ? 'form-ready' : ''}}">
+    <!-- 名称 -->
+    <view class="field field-anim" style="transition-delay: 0.06s;">
+      <view class="field-label">习惯名称</view>
+      <input
+        class="field-input"
+        placeholder="例如: 跑步、阅读、冥想..."
+        placeholderClass="field-placeholder"
+        value="{{name}}"
+        bindinput="onNameInput"
+        maxlength="12"
+      />
+    </view>
+
+    <!-- 频率 -->
+    <view class="field field-anim" style="transition-delay: 0.12s;">
+      <view class="field-label">打卡频次</view>
+      <view class="freq-grid">
+        <view
+          class="freq-item {{frequency === frequencies[index] ? 'active' : ''}}"
+          wx:for="{{frequencyLabels}}"
+          wx:key="index"
+          style="{{frequency === frequencies[index] ? 'border-color:' + bubbleColor + '; color:' + bubbleColor : ''}}"
+          bindtap="onFrequencyTap"
+          data-freq="{{frequencies[index]}}"
+        >
+          <text class="freq-name">{{item}}</text>
+          <text class="freq-desc">{{frequencyDesc[index]}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 星期选择(WEEKLY) -->
+    <view class="field field-anim" style="transition-delay: 0.15s;" wx:if="{{frequency === 'WEEKLY'}}">
+      <view class="field-label">选择星期</view>
+      <view class="weekday-grid">
+        <view
+          class="weekday-item {{weekDay === index + 1 ? 'active' : ''}}"
+          wx:for="{{weekDays}}"
+          wx:key="index"
+          style="{{weekDay === index + 1 ? 'background:' + bubbleColor + '; color:#fff; border-color:' + bubbleColor : ''}}"
+          bindtap="onWeekDayTap"
+          data-day="{{index + 1}}"
+        >{{item}}</view>
+      </view>
+    </view>
+
+    <!-- 日期(ONCE) -->
+    <view class="field field-anim" style="transition-delay: 0.18s;" wx:if="{{frequency === 'ONCE'}}">
+      <view class="field-label">目标日期</view>
+      <picker mode="date" bindchange="onDateChange" value="{{targetDate}}">
+        <view class="field-input picker-value">
+          <text>{{targetDate || '选择日期'}}</text>
+          <text class="picker-arrow">></text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 备注 -->
+    <view class="field field-anim" style="transition-delay: 0.18s;">
+      <view class="field-label">备注 <text class="field-optional">选填</text></view>
+      <textarea
+        class="field-textarea"
+        placeholder="给自己加个小目标..."
+        placeholderClass="field-placeholder"
+        value="{{remark}}"
+        bindinput="onRemarkInput"
+        maxlength="100"
+        auto-height
+      />
+    </view>
+
+    <!-- 颜色 -->
+    <view class="field field-anim" style="transition-delay: 0.24s;">
+      <view class="field-label">气泡颜色</view>
+      <view class="color-grid">
+        <view
+          class="color-item {{bubbleColor === item.value ? 'active' : ''}}"
+          wx:for="{{colors}}"
+          wx:key="value"
+          bindtap="onColorTap"
+          data-color="{{item.value}}"
+        >
+          <view class="color-circle" style="background: {{item.value}};"></view>
+          <text class="color-name">{{item.name}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 提交 -->
+    <view class="field-anim submit-wrap" style="transition-delay: 0.30s;">
+      <view class="btn-primary submit-btn" bindtap="onSubmit" style="background: {{bubbleColor}}; box-shadow: 0 8rpx 24rpx {{bubbleColor}}55;">
+        {{editId ? '保存修改' : '开始打卡'}}
+      </view>
+      <view class="btn-delete" wx:if="{{editId}}" bindtap="onDelete">删除此习惯</view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,246 @@
+.page-add {
+  min-height: 100vh;
+}
+
+/* 预览 */
+.preview-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60rpx 0 40rpx;
+}
+
+.preview-bubble {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12rpx 40rpx rgba(0, 0, 0, 0.25), inset 0 -4rpx 12rpx rgba(0, 0, 0, 0.1), inset 0 4rpx 12rpx rgba(255, 255, 255, 0.3);
+  animation: previewFloat 3s ease-in-out infinite;
+}
+
+@keyframes previewFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12rpx); }
+}
+
+.preview-text {
+  font-size: 28rpx;
+  color: #fff;
+  font-weight: 600;
+  text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.15);
+}
+
+/* 表单 */
+.form-area {
+  background: #fff;
+  border-radius: 40rpx 40rpx 0 0;
+  padding: 48rpx 40rpx 80rpx;
+  min-height: 60vh;
+  transform: translateY(100rpx);
+  opacity: 0;
+  transition: transform 0.45s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.4s ease-out;
+  will-change: transform, opacity;
+}
+
+.form-area.form-ready {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* 字段交错渐显 */
+.field-anim {
+  opacity: 0;
+  transform: translateY(30rpx);
+  transition: opacity 0.35s ease-out, transform 0.35s ease-out;
+}
+
+.form-ready .field-anim {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.submit-wrap {
+  margin-top: 48rpx;
+}
+
+.field {
+  margin-bottom: 40rpx;
+}
+
+.field-label {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin-bottom: 16rpx;
+}
+
+.field-optional {
+  font-weight: 400;
+  font-size: 22rpx;
+  color: #bbb;
+}
+
+.field-input {
+  background: #f7f8fc;
+  border-radius: 20rpx;
+  padding: 24rpx;
+  font-size: 28rpx;
+  color: #333;
+  border: 2rpx solid transparent;
+  transition: border-color 0.2s;
+}
+
+.field-input:focus {
+  border-color: #667eea;
+}
+
+.field-placeholder {
+  color: #c5c5c5;
+}
+
+.field-textarea {
+  width: 100%;
+  min-height: 100rpx;
+  background: #f7f8fc;
+  border-radius: 20rpx;
+  padding: 24rpx;
+  font-size: 28rpx;
+  color: #333;
+  box-sizing: border-box;
+  line-height: 1.6;
+}
+
+.picker-value {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.picker-arrow {
+  color: #ccc;
+  font-size: 28rpx;
+}
+
+/* 频率网格 */
+.freq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16rpx;
+}
+
+.freq-item {
+  background: #f7f8fc;
+  border-radius: 20rpx;
+  padding: 20rpx 24rpx;
+  border: 2rpx solid transparent;
+  transition: all 0.2s;
+}
+
+.freq-item.active {
+  background: #faf8ff;
+  border-width: 2rpx;
+  border-style: solid;
+}
+
+.freq-name {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: inherit;
+  margin-bottom: 4rpx;
+}
+
+.freq-desc {
+  font-size: 20rpx;
+  color: #aaa;
+}
+
+.freq-item.active .freq-desc {
+  color: inherit;
+  opacity: 0.7;
+}
+
+/* 星期选择器 */
+.weekday-grid {
+  display: flex;
+  gap: 12rpx;
+}
+
+.weekday-item {
+  flex: 1;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #666;
+  background: #f7f8fc;
+  border: 2rpx solid transparent;
+  transition: all 0.2s;
+}
+
+.weekday-item.active {
+  border-color: currentColor;
+  transform: scale(1.05);
+}
+
+/* 颜色选择 */
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20rpx;
+}
+
+.color-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+  padding: 16rpx 0;
+  border-radius: 16rpx;
+  transition: all 0.2s;
+}
+
+.color-item.active {
+  background: #f7f8fc;
+  transform: scale(1.05);
+}
+
+.color-circle {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.15);
+}
+
+.color-item.active .color-circle {
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.25);
+  transform: scale(1.1);
+}
+
+.color-name {
+  font-size: 20rpx;
+  color: #999;
+}
+
+/* 提交 */
+.submit-btn {
+  margin-top: 48rpx;
+  border-radius: 48rpx;
+  font-weight: 600;
+  letter-spacing: 4rpx;
+}
+
+/* 删除按钮 */
+.btn-delete {
+  margin-top: 32rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #f5576c;
+  padding: 16rpx 0;
+}

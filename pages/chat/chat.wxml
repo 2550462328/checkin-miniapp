@@ -1,0 +1,125 @@
+<view class="chat-page">
+  <!-- Welcome banner -->
+  <view class="welcome-banner" wx:if="{{messages.length === 0}}">
+    <view class="welcome-icon"></view>
+    <text class="welcome-text">你好，我是 AI 助手</text>
+    <text class="welcome-sub">有什么我可以帮你的吗？</text>
+  </view>
+
+  <!-- Message list -->
+  <scroll-view
+    class="msg-list"
+    scroll-y
+    scroll-into-view="{{scrollToView}}"
+    scroll-with-animation
+    bindscroll="onScroll"
+    bindscrolltolower="onScrollToLower"
+  >
+    <view class="msg-row {{item.role === 'user' ? 'msg-right' : 'msg-left'}}"
+          wx:for="{{messages}}" wx:key="id" id="{{item.id}}">
+      <!-- AI avatar -->
+      <view class="avatar ai-avatar" wx:if="{{item.role === 'ai'}}">
+        <view class="avatar-robot-icon"></view>
+      </view>
+
+      <view class="bubble {{item.role === 'user' ? 'bubble-user' : 'bubble-ai'}}">
+        <!-- Typing indicator -->
+        <view class="typing-dots" wx:if="{{item.loading && !item.text}}">
+          <view class="dot dot1"></view>
+          <view class="dot dot2"></view>
+          <view class="dot dot3"></view>
+        </view>
+        <block wx:else>
+          <!-- User attached images -->
+          <view class="bubble-images" wx:if="{{item.images && item.images.length}}">
+            <image
+              wx:for="{{item.images}}" wx:for-item="img" wx:key="*this"
+              class="bubble-img"
+              src="{{img}}"
+              mode="aspectFill"
+              bindtap="onPreviewImage"
+              data-src="{{img}}"
+            />
+          </view>
+          <!-- User attached files -->
+          <view class="bubble-files" wx:if="{{item.files && item.files.length}}">
+            <view class="bubble-file-item" wx:for="{{item.files}}" wx:for-item="fname" wx:key="*this">
+              <view class="file-icon-small"></view>
+              <text class="bubble-file-name">{{fname}}</text>
+            </view>
+          </view>
+          <mp-html
+            wx:if="{{item.role === 'ai' && item.text && item.text !== '[ 图片 ]' && item.text !== '[ 文件 ]'}}"
+            content="{{item.text}}"
+            markdown
+            selectable="force"
+            tag-style="{{mdTagStyle}}"
+            show-img-menu
+          />
+          <text
+            wx:if="{{item.role === 'user' && item.text && item.text !== '[ 图片 ]' && item.text !== '[ 文件 ]'}}"
+            user-select
+          >{{item.text}}</text>
+        </block>
+      </view>
+
+      <!-- User avatar -->
+      <view class="avatar user-avatar" wx:if="{{item.role === 'user'}}">
+        <text class="avatar-text">我</text>
+      </view>
+    </view>
+    <!-- Bottom anchor for auto-scroll -->
+    <view wx:for="{{messages}}" wx:key="id" id="{{item.id}}-end" style="height:0;"></view>
+    <!-- Bottom padding -->
+    <view style="height: 20rpx;"></view>
+  </scroll-view>
+
+  <!-- Image/File preview bar -->
+  <view class="preview-bar" wx:if="{{previewImages.length}}">
+    <view class="preview-item" wx:for="{{previewImages}}" wx:key="path">
+      <image class="preview-thumb" wx:if="{{!item.isFile}}" src="{{item.path}}" mode="aspectFill" />
+      <view class="preview-file" wx:if="{{item.isFile}}">
+        <view class="file-icon"></view>
+        <text class="preview-file-name">{{item.fileName}}</text>
+      </view>
+      <view class="preview-remove" bindtap="onRemoveImage" data-idx="{{index}}">x</view>
+    </view>
+  </view>
+
+  <!-- Input bar -->
+  <view class="input-bar">
+    <view class="img-btn" bindtap="onChooseImage">
+      <view class="img-btn-icon"></view>
+    </view>
+    <view class="img-btn" bindtap="onChooseFile">
+      <view class="file-btn-icon"></view>
+    </view>
+    <textarea
+      class="msg-input"
+      placeholder="输入消息..."
+      value="{{inputText}}"
+      bindinput="onInputChange"
+      disabled="{{!connected}}"
+      maxlength="5000"
+      auto-height
+      show-confirm-bar="{{false}}"
+    />
+    <view class="send-btn {{(!inputText && !previewImages.length) || sending ? 'send-disabled' : ''}}"
+          bindtap="onSend">
+      <text class="send-text">发送</text>
+    </view>
+  </view>
+
+  <!-- 订阅授权弹窗 -->
+  <view class="modal-overlay" wx:if="{{showSubscribeGuide}}" bindtap="onCancelChatSubscribe">
+    <view class="subscribe-guide-card" catchtap="preventBubble">
+      <view class="subscribe-guide-icon">🔔</view>
+      <view class="subscribe-guide-title">需要你的授权</view>
+      <view class="subscribe-guide-desc">授权后才能为你发送提醒消息，请点击确认授权</view>
+      <view class="subscribe-actions">
+        <view class="subscribe-btn-cancel" bindtap="onCancelChatSubscribe">暂不开启</view>
+        <view class="subscribe-btn-confirm" bindtap="onConfirmChatSubscribe">确认授权</view>
+      </view>
+    </view>
+  </view>
+</view>

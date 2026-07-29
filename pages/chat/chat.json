@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "AI 助手",
+  "navigationBarBackgroundColor": "#667eea",
+  "usingComponents": {
+    "mp-html": "/components/mp-html/index"
+  }
+}

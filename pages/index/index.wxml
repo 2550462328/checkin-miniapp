@@ -1,0 +1,150 @@
+<view class="page-index">
+  <!-- 粒子背景 -->
+  <view class="particles-container">
+    <view
+      class="particle"
+      wx:for="{{particles}}"
+      wx:key="id"
+      style="left:{{item.left}}%; width:{{item.size}}rpx; height:{{item.size}}rpx; animation-delay:{{item.delay}}s; animation-duration:{{item.duration}}s; opacity:{{item.opacity}};"
+    ></view>
+  </view>
+
+  <!-- 顶部信息 -->
+  <view class="header header-slide-in">
+    <view class="header-left">
+      <view class="header-greeting">{{greeting}}</view>
+      <view class="header-date">{{todayStr}}</view>
+    </view>
+    <view class="header-right">
+      <text class="progress-text">{{checkedCount}}/{{totalCount}}</text>
+      <text class="progress-label">已完成</text>
+    </view>
+  </view>
+
+  <!-- 进度条 -->
+  <view class="progress-bar-wrap">
+    <view class="progress-bar-bg">
+      <view class="progress-bar-fill" style="width:{{progressPercent}}%;"></view>
+    </view>
+    <view class="progress-encourage">{{encouragement}}</view>
+  </view>
+
+  <!-- 浮动气泡区域 -->
+  <view class="bubble-area" wx:if="{{bubbles.length > 0}}">
+    <view
+      class="float-bubble bubbleGlow {{item.floatClass}} {{item.popping ? 'bubble-popping' : ''}}"
+      wx:for="{{bubbles}}"
+      wx:key="id"
+      style="left:{{item.x}}px; top:{{item.y}}px; width:{{item.size}}px; height:{{item.size}}px; background:{{item.bubbleColor || '#667eea'}}; animation-delay:{{item.animDelay}}s; animation-duration:{{item.animDuration}}s;"
+      bindtap="onBubbleTap"
+      bindlongpress="onBubbleLongPress"
+      data-item="{{item}}"
+    >
+      <text class="bubble-label">{{item.name}}</text>
+      <!-- 气泡破裂水滴 -->
+      <block wx:if="{{item.popping}}">
+        <view class="pop-drop pop-drop-0"></view>
+        <view class="pop-drop pop-drop-1"></view>
+        <view class="pop-drop pop-drop-2"></view>
+        <view class="pop-drop pop-drop-3"></view>
+        <view class="pop-drop pop-drop-4"></view>
+        <view class="pop-drop pop-drop-5"></view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 全部完成 -->
+  <view class="all-done" wx:elif="{{totalCount > 0 && checkedCount >= totalCount}}">
+    <view class="confetti-container">
+      <view class="confetti confetti-1"></view>
+      <view class="confetti confetti-2"></view>
+      <view class="confetti confetti-3"></view>
+      <view class="confetti confetti-4"></view>
+      <view class="confetti confetti-5"></view>
+      <view class="confetti confetti-6"></view>
+      <view class="confetti confetti-7"></view>
+      <view class="confetti confetti-8"></view>
+    </view>
+    <view class="done-check-icon">✓</view>
+    <view class="done-title">今日全部完成!</view>
+    <view class="done-sub">太棒了，继续保持</view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:else>
+    <view class="empty-circle-icon">
+      <text class="empty-plus">+</text>
+    </view>
+    <view class="empty-text">还没有打卡项</view>
+    <view class="empty-sub">点击下方按钮开始你的第一个习惯</view>
+  </view>
+
+  <!-- 添加按钮 -->
+  <view class="fab-btn" bindtap="goAdd">
+    <text class="fab-icon">+</text>
+  </view>
+
+  <!-- 可拖拽AI机器人 -->
+  <view
+    wx:if="{{showRobot}}"
+    class="robot-btn {{robotMoved ? '' : 'robotBreathing'}}"
+    style="left:{{robotX}}px; top:{{robotY}}px;"
+    catchtouchstart="onRobotTouchStart"
+    catchtouchmove="onRobotTouchMove"
+    catchtouchend="onRobotTouchEnd"
+  >
+    <view class="robot-icon"></view>
+  </view>
+
+  <!-- 打卡弹窗 -->
+  <view class="modal-overlay" wx:if="{{showModal}}" bindtap="onCancelModal">
+    <view class="modal-card" catchtap="preventBubble">
+      <view class="modal-header">
+        <view class="modal-dot" style="background:{{currentItem.bubbleColor || '#667eea'}};"></view>
+        <text class="modal-title">{{currentItem.name}}</text>
+      </view>
+      <view class="modal-body">
+        <textarea
+          class="modal-input"
+          placeholder="记录一下此刻的心情..."
+          placeholderClass="modal-placeholder"
+          value="{{remarkInput}}"
+          bindinput="onRemarkInput"
+          maxlength="200"
+          auto-height
+        />
+        <view class="modal-counter">{{remarkInput.length || 0}}/200</view>
+      </view>
+      <view class="modal-actions">
+        <view class="modal-btn-cancel" bindtap="onCancelModal">再想想</view>
+        <view class="modal-btn-confirm" bindtap="onConfirmCheckin"
+              style="background:{{currentItem.bubbleColor || '#667eea'}};">
+          完成打卡
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 心灵鸡汤弹窗 -->
+  <view class="quote-overlay {{quoteAnimOut ? 'quoteAnimOut' : ''}}" wx:if="{{showQuote}}" bindtap="onQuoteTap">
+    <view class="quote-card" catchtap="onQuoteTap">
+      <view class="quote-icon">✨</view>
+      <view class="quote-text">{{quoteText}}</view>
+      <view class="quote-hint">点击关闭</view>
+    </view>
+  </view>
+
+  <!-- 订阅提醒引导弹窗 -->
+  <view class="modal-overlay" wx:if="{{showSubscribeGuide}}" bindtap="onCancelSubscribe">
+    <view class="subscribe-guide-card" catchtap="preventBubble">
+      <view class="subscribe-guide-icon">🔔</view>
+      <view class="subscribe-guide-title">开启打卡提醒？</view>
+      <view class="subscribe-guide-desc">开启后每天18:00会提醒你完成未打卡的项目，帮你养成好习惯</view>
+      <view class="modal-actions">
+        <view class="modal-btn-cancel" bindtap="onCancelSubscribe">暂不开启</view>
+        <view class="modal-btn-confirm" bindtap="onConfirmSubscribe"
+              style="background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);">好的</view>
+      </view>
+    </view>
+  </view>
+</view>

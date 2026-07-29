@@ -1,0 +1,39 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/add/add",
+    "pages/history/history",
+    "pages/stats/stats",
+    "pages/webview/webview",
+    "pages/chat/chat"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#667eea",
+    "navigationBarTitleText": "每日打卡",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#764ba2",
+    "backgroundColorTop": "#667eea",
+    "backgroundColorBottom": "#764ba2"
+  },
+  "tabBar": {
+    "color": "#999",
+    "selectedColor": "#764ba2",
+    "backgroundColor": "#fff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "打卡"
+      },
+      {
+        "pagePath": "pages/history/history",
+        "text": "记录"
+      },
+      {
+        "pagePath": "pages/stats/stats",
+        "text": "统计"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

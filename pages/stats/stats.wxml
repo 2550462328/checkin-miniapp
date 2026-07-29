@@ -1,0 +1,44 @@
+<view class="page-stats">
+  <!-- 顶部总计 -->
+  <view class="stats-header">
+    <text class="stats-total">{{totalCount}}</text>
+    <text class="stats-label">{{tabs[activeTab]}}打卡</text>
+  </view>
+
+  <!-- Tab -->
+  <view class="capsule-tabs">
+    <view
+      class="capsule-tab {{activeTab === index ? 'active' : ''}}"
+      wx:for="{{tabs}}"
+      wx:key="index"
+      bindtap="onTabChange"
+      data-idx="{{index}}"
+    >{{item}}</view>
+  </view>
+
+  <block wx:if="{{statsData.length > 0}}">
+    <!-- 柱状图卡片 -->
+    <view class="chart-card">
+      <view class="card-title">打卡次数排行</view>
+      <canvas type="2d" id="barCanvas" class="bar-canvas"></canvas>
+    </view>
+
+    <!-- 饼图卡片 -->
+    <view class="chart-card">
+      <view class="card-title">打卡占比分布</view>
+      <canvas type="2d" id="pieCanvas" class="pie-canvas"></canvas>
+      <!-- 图例 -->
+      <view class="legend-list">
+        <view class="legend-item" wx:for="{{statsData}}" wx:key="itemName">
+          <view class="legend-dot" style="background: {{colors[index % colors.length]}};"></view>
+          <text class="legend-name">{{item.itemName}}</text>
+          <text class="legend-count">{{item.count}}次</text>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <view class="empty-state" wx:else>
+    <view class="empty-text">暂无统计数据</view>
+  </view>
+</view>

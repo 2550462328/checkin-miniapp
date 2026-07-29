@@ -1,0 +1,780 @@
+.page-index {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ============ 粒子背景 ============ */
+.particles-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.particle {
+  position: absolute;
+  bottom: -20rpx;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+  animation: particleFloat linear infinite;
+}
+
+@keyframes particleFloat {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh) translateX(30rpx);
+    opacity: 0;
+  }
+}
+
+/* ============ 顶部 Header ============ */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32rpx 40rpx;
+}
+
+.header-slide-in {
+  animation: headerSlideIn 0.6s ease-out;
+}
+
+@keyframes headerSlideIn {
+  from {
+    transform: translateX(-40rpx);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.header-greeting {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #fff;
+}
+
+.header-date {
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 400;
+}
+
+.header-right {
+  display: flex;
+  align-items: baseline;
+  gap: 8rpx;
+}
+
+.progress-text {
+  font-size: 48rpx;
+  font-weight: 700;
+  color: #fff;
+}
+
+.progress-label {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* ============ 进度条 ============ */
+.progress-bar-wrap {
+  padding: 0 40rpx 24rpx;
+}
+
+.progress-bar-bg {
+  height: 12rpx;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 6rpx;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+  border-radius: 6rpx;
+  transition: width 0.6s ease;
+}
+
+.progress-encourage {
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 10rpx;
+}
+
+/* ============ 气泡浮动动画 ============ */
+@keyframes bubbleFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes bubbleFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 海洋漂浮动画：左上↔右下，横向偏移大 */
+@keyframes oceanFloatAnim0 {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(18px, -10px); }
+  50% { transform: translate(-8px, 8px); }
+  75% { transform: translate(-18px, 10px); }
+}
+
+/* 海洋漂浮动画：缓慢上浮 + 轻微左右摇摆 */
+@keyframes oceanFloatAnim1 {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(8px, -12px); }
+  50% { transform: translate(-4px, -20px); }
+  75% { transform: translate(-8px, 5px); }
+}
+
+/* 海洋漂浮动画：水平漂移为主 */
+@keyframes oceanFloatAnim2 {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(22px, -4px); }
+  50% { transform: translate(-10px, 6px); }
+  75% { transform: translate(-22px, -6px); }
+}
+
+/* 海洋漂浮动画：对角线漂移 + 轻微缩放 */
+@keyframes oceanFloatAnim3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(14px, -14px) scale(0.97); }
+  50% { transform: translate(-6px, 10px) scale(1.03); }
+  75% { transform: translate(-14px, -8px) scale(0.98); }
+}
+
+.bubble-area {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 340rpx);
+}
+
+.float-bubble {
+  position: absolute;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: bubbleFadeIn 0.4s ease-out backwards;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.2), inset 0 -4rpx 12rpx rgba(0, 0, 0, 0.1), inset 0 4rpx 12rpx rgba(255, 255, 255, 0.3);
+  transition: box-shadow 0.3s;
+}
+
+/* 4组海洋漂浮class */
+.oceanFloat0 {
+  animation: bubbleFadeIn 0.4s ease-out backwards, oceanFloatAnim0 ease-in-out infinite;
+}
+.oceanFloat1 {
+  animation: bubbleFadeIn 0.4s ease-out backwards, oceanFloatAnim1 ease-in-out infinite;
+}
+.oceanFloat2 {
+  animation: bubbleFadeIn 0.4s ease-out backwards, oceanFloatAnim2 ease-in-out infinite;
+}
+.oceanFloat3 {
+  animation: bubbleFadeIn 0.4s ease-out backwards, oceanFloatAnim3 ease-in-out infinite;
+}
+
+.float-bubble::after {
+  content: '';
+  position: absolute;
+  top: 15%;
+  left: 22%;
+  width: 30%;
+  height: 20%;
+  background: radial-gradient(ellipse, rgba(255,255,255,0.5) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.float-bubble:active {
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.3);
+}
+
+/* 气泡发光脉冲 */
+.bubbleGlow::before {
+  content: '';
+  position: absolute;
+  top: -6rpx;
+  left: -6rpx;
+  right: -6rpx;
+  bottom: -6rpx;
+  border-radius: 50%;
+  animation: glowPulse 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+  50% {
+    box-shadow: 0 0 24rpx 8rpx rgba(255, 255, 255, 0.25);
+  }
+}
+
+.bubble-label {
+  font-size: 24rpx;
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+  max-width: 80%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-shadow: 0 1rpx 4rpx rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+/* ============ 气泡破裂动画 ============ */
+.bubble-popping {
+  animation: bubblePop 0.45s ease-out forwards !important;
+  pointer-events: none;
+}
+
+.bubble-popping .bubble-label {
+  animation: labelFade 0.15s ease-out forwards;
+}
+
+@keyframes bubblePop {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  15% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+  35% {
+    transform: scale(0.88);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+@keyframes labelFade {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* 破裂时光环扩散 —— 覆盖 glowPulse */
+.bubble-popping::before {
+  animation: popRing 0.45s ease-out forwards !important;
+}
+
+@keyframes popRing {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 8rpx 4rpx rgba(255, 255, 255, 0.5);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2.8);
+    box-shadow: 0 0 16rpx 2rpx rgba(255, 255, 255, 0);
+    opacity: 0;
+  }
+}
+
+/* 破裂时高光消失 */
+.bubble-popping::after {
+  animation: labelFade 0.1s ease-out forwards;
+}
+
+/* 水滴飞溅 */
+.pop-drop {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10rpx;
+  height: 10rpx;
+  margin: -5rpx 0 0 -5rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 6rpx rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.pop-drop-0 { animation: dropFly0 0.45s ease-out forwards; }
+.pop-drop-1 { animation: dropFly1 0.45s ease-out 0.02s forwards; }
+.pop-drop-2 { animation: dropFly2 0.45s ease-out 0.04s forwards; }
+.pop-drop-3 { animation: dropFly3 0.45s ease-out 0.01s forwards; }
+.pop-drop-4 { animation: dropFly4 0.45s ease-out 0.03s forwards; }
+.pop-drop-5 { animation: dropFly5 0.45s ease-out 0.05s forwards; }
+
+@keyframes dropFly0 {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(48px, -18px) scale(0.2); opacity: 0; }
+}
+@keyframes dropFly1 {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(28px, -44px) scale(0.2); opacity: 0; }
+}
+@keyframes dropFly2 {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(-22px, -46px) scale(0.2); opacity: 0; }
+}
+@keyframes dropFly3 {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(-48px, -12px) scale(0.2); opacity: 0; }
+}
+@keyframes dropFly4 {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(-32px, 38px) scale(0.2); opacity: 0; }
+}
+@keyframes dropFly5 {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(36px, 40px) scale(0.2); opacity: 0; }
+}
+
+/* ============ 全部完成 ============ */
+.all-done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 240rpx;
+  position: relative;
+}
+
+.done-check-icon {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 64rpx;
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 32rpx;
+  box-shadow: 0 8rpx 32rpx rgba(67, 233, 123, 0.4);
+}
+
+.done-title {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 12rpx;
+}
+
+.done-sub {
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* 彩纸飘落 */
+.confetti-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.confetti {
+  position: absolute;
+  top: -20rpx;
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 4rpx;
+}
+
+.confetti-1 { left: 8%;  background: #f093fb; animation: confettiFallLeft 3s ease-in forwards; animation-delay: 0s; }
+.confetti-2 { left: 22%; background: #43e97b; animation: confettiFallRight 2.8s ease-in forwards; animation-delay: 0.15s; }
+.confetti-3 { left: 36%; background: #667eea; animation: confettiFallLeft 3.2s ease-in forwards; animation-delay: 0.3s; }
+.confetti-4 { left: 50%; background: #f5576c; animation: confettiFallRight 2.6s ease-in forwards; animation-delay: 0.1s; }
+.confetti-5 { left: 64%; background: #38f9d7; animation: confettiFallLeft 3.1s ease-in forwards; animation-delay: 0.25s; }
+.confetti-6 { left: 78%; background: #ffd700; animation: confettiFallRight 2.9s ease-in forwards; animation-delay: 0.05s; }
+.confetti-7 { left: 88%; background: #764ba2; animation: confettiFallLeft 3.3s ease-in forwards; animation-delay: 0.2s; }
+.confetti-8 { left: 15%; background: #ff6b6b; animation: confettiFallRight 2.7s ease-in forwards; animation-delay: 0.35s; }
+
+@keyframes confettiFallLeft {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(600rpx) translateX(-60rpx) rotate(540deg);
+    opacity: 0;
+  }
+}
+
+@keyframes confettiFallRight {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(600rpx) translateX(60rpx) rotate(-540deg);
+    opacity: 0;
+  }
+}
+
+/* ============ 空状态 ============ */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 280rpx;
+}
+
+.empty-circle-icon {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  border: 4rpx dashed rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32rpx;
+  animation: breathPulse 2s ease-in-out infinite;
+}
+
+.empty-plus {
+  font-size: 64rpx;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 300;
+  line-height: 1;
+}
+
+@keyframes breathPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+
+.empty-text {
+  font-size: 34rpx;
+  color: #fff;
+  font-weight: 600;
+  margin-bottom: 8rpx;
+}
+
+.empty-sub {
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* ============ FAB按钮 ============ */
+.fab-btn {
+  position: fixed;
+  bottom: 180rpx;
+  right: 48rpx;
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 32rpx rgba(245, 87, 108, 0.45);
+  z-index: 50;
+}
+
+.fab-btn:active {
+  transform: scale(0.92);
+}
+
+.fab-icon {
+  font-size: 52rpx;
+  color: #fff;
+  font-weight: 300;
+  line-height: 1;
+  margin-top: -4rpx;
+}
+
+/* ============ 可拖拽AI机器人 ============ */
+.robot-btn {
+  position: fixed;
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  box-shadow: 0 6rpx 24rpx rgba(118, 75, 162, 0.5);
+}
+
+.robot-icon {
+  width: 48rpx;
+  height: 48rpx;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='8' width='16' height='12' rx='3'/%3E%3Ccircle cx='9' cy='14' r='1.5' fill='white' stroke='none'/%3E%3Ccircle cx='15' cy='14' r='1.5' fill='white' stroke='none'/%3E%3Cline x1='10' y1='17.5' x2='14' y2='17.5'/%3E%3Cline x1='12' y1='4' x2='12' y2='8'/%3E%3Ccircle cx='12' cy='3' r='1.2' fill='white' stroke='none'/%3E%3Cline x1='2' y1='13' x2='4' y2='13'/%3E%3Cline x1='20' y1='13' x2='22' y2='13'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.robotBreathing {
+  animation: robotBreathe 2s ease-in-out infinite;
+}
+
+@keyframes robotBreathe {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 6rpx 24rpx rgba(118, 75, 162, 0.5);
+  }
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 8rpx 36rpx rgba(118, 75, 162, 0.7);
+  }
+}
+
+/* ============ 打卡弹窗 ============ */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(60rpx); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-card {
+  width: 620rpx;
+  background: #fff;
+  border-radius: 32rpx;
+  padding: 48rpx 40rpx 40rpx;
+  animation: slideUp 0.3s ease-out;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-bottom: 32rpx;
+}
+
+.modal-dot {
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: 50%;
+}
+
+.modal-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.modal-body {
+  margin-bottom: 36rpx;
+}
+
+.modal-input {
+  width: 100%;
+  min-height: 160rpx;
+  border: none;
+  background: #f7f8fc;
+  border-radius: 20rpx;
+  padding: 24rpx;
+  font-size: 28rpx;
+  color: #333;
+  box-sizing: border-box;
+  line-height: 1.6;
+}
+
+.modal-placeholder {
+  color: #bbb;
+}
+
+.modal-counter {
+  text-align: right;
+  font-size: 22rpx;
+  color: #ccc;
+  margin-top: 8rpx;
+  padding-right: 8rpx;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 20rpx;
+}
+
+.modal-btn-cancel {
+  flex: 1;
+  text-align: center;
+  padding: 22rpx 0;
+  border-radius: 48rpx;
+  font-size: 30rpx;
+  color: #999;
+  background: #f5f5f5;
+  font-weight: 500;
+}
+
+.modal-btn-confirm {
+  flex: 1.5;
+  text-align: center;
+  padding: 22rpx 0;
+  border-radius: 48rpx;
+  font-size: 30rpx;
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 6rpx 20rpx rgba(0, 0, 0, 0.15);
+}
+
+.modal-btn-confirm:active,
+.modal-btn-cancel:active {
+  opacity: 0.8;
+}
+
+/* ============ 心灵鸡汤弹窗 ============ */
+.quote-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 300;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.quote-overlay.quoteAnimOut {
+  animation: quoteFadeOut 0.3s ease-in forwards;
+}
+
+@keyframes quoteFadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.quote-card {
+  width: 560rpx;
+  padding: 60rpx 48rpx;
+  border-radius: 32rpx;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1rpx solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: quoteIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.quoteAnimOut .quote-card {
+  animation: none;
+}
+
+@keyframes quoteIn {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.quote-icon {
+  font-size: 56rpx;
+  margin-bottom: 28rpx;
+}
+
+.quote-text {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 24rpx;
+}
+
+.quote-hint {
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* ============ 订阅引导弹窗 ============ */
+.subscribe-guide-card {
+  width: 620rpx;
+  background: #fff;
+  border-radius: 32rpx;
+  padding: 56rpx 40rpx 40rpx;
+  text-align: center;
+  animation: slideUp 0.3s ease-out;
+}
+
+.subscribe-guide-icon {
+  font-size: 72rpx;
+  margin-bottom: 24rpx;
+}
+
+.subscribe-guide-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 16rpx;
+}
+
+.subscribe-guide-desc {
+  font-size: 28rpx;
+  color: #888;
+  line-height: 1.6;
+  margin-bottom: 40rpx;
+}

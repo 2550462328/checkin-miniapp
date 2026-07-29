@@ -1,0 +1,46 @@
+<view class="page-history">
+  <!-- 顶部统计 -->
+  <view class="stat-bar">
+    <text class="stat-num">{{totalCount}}</text>
+    <text class="stat-label">次打卡</text>
+  </view>
+
+  <!-- Tab -->
+  <view class="capsule-tabs">
+    <view
+      class="capsule-tab {{activeTab === index ? 'active' : ''}}"
+      wx:for="{{tabs}}"
+      wx:key="index"
+      bindtap="onTabChange"
+      data-idx="{{index}}"
+    >{{item}}</view>
+  </view>
+
+  <!-- 时间线 -->
+  <view class="timeline" wx:if="{{groupedRecords.length > 0}}">
+    <view class="day-group" wx:for="{{groupedRecords}}" wx:key="date" wx:for-item="group">
+      <view class="day-header">
+        <view class="day-dot"></view>
+        <text class="day-label">{{group.label}}</text>
+        <text class="day-count">{{group.items.length}}次</text>
+      </view>
+      <view class="day-items">
+        <view class="record-card" wx:for="{{group.items}}" wx:key="id" wx:for-item="rec">
+          <view class="record-top">
+            <view class="record-tag">{{rec.itemName}}</view>
+            <text class="record-time">{{rec.timeStr}}</text>
+          </view>
+          <text class="record-remark" wx:if="{{rec.remark}}">{{rec.remark}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:else>
+    <view class="empty-text">还没有打卡记录</view>
+  </view>
+
+  <view class="load-tip" wx:if="{{!hasMore && records.length > 0}}">
+    <text>- 到底了 -</text>
+  </view>
+</view>
