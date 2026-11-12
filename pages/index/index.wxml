@@ -84,18 +84,6 @@
     <text class="fab-icon">+</text>
   </view>
 
-  <!-- 可拖拽AI机器人 -->
-  <view
-    wx:if="{{showRobot}}"
-    class="robot-btn {{robotMoved ? '' : 'robotBreathing'}}"
-    style="left:{{robotX}}px; top:{{robotY}}px;"
-    catchtouchstart="onRobotTouchStart"
-    catchtouchmove="onRobotTouchMove"
-    catchtouchend="onRobotTouchEnd"
-  >
-    <view class="robot-icon"></view>
-  </view>
-
   <!-- 打卡弹窗 -->
   <view class="modal-overlay" wx:if="{{showModal}}" bindtap="onCancelModal">
     <view class="modal-card" catchtap="preventBubble">

@@ -71,11 +71,6 @@ Page({
     showQuote: false,
     quoteText: '',
     quoteAnimOut: false,
-    // Draggable robot
-    robotX: 24,
-    robotY: 600,
-    robotMoved: false,
-    showRobot: false,
     // Subscribe guide
     showSubscribeGuide: false
   },
@@ -100,39 +95,25 @@ Page({
       });
     }
 
-    // Robot initial position: bottom-left above tabBar
-    const robotY = sysInfo.windowHeight - 180;
-
     this.setData({
       screenWidth: sysInfo.windowWidth,
       screenHeight: sysInfo.windowHeight - 120,
       todayStr,
       greeting,
-      particles,
-      robotX: 24,
-      robotY
+      particles
     });
   },
 
   onShow() {
     const uid = app.globalData.userId;
     if (uid) {
-      this.loadFeatures();
       this.loadItems();
     } else {
       app.userReadyCallback = () => {
-        this.loadFeatures();
         this.loadItems();
       };
     }
     this.checkAndShowQuote();
-  },
-
-  loadFeatures() {
-    request({ url: '/api/user/features' }).then(res => {
-      var data = res.data || {};
-      this.setData({ showRobot: !!data.showRobot });
-    });
   },
 
   // --- Daily quote popup ---
@@ -330,42 +311,5 @@ Page({
 
   goAdd() {
     wx.navigateTo({ url: '/pages/add/add' });
-  },
-
-  // --- Draggable robot ---
-  onRobotTouchStart(e) {
-    const touch = e.touches[0];
-    this._robotStartTouch = { x: touch.clientX, y: touch.clientY };
-    this._robotOrigin = { x: this.data.robotX, y: this.data.robotY };
-    this.setData({ robotMoved: false });
-  },
-
-  onRobotTouchMove(e) {
-    const touch = e.touches[0];
-    const dx = touch.clientX - this._robotStartTouch.x;
-    const dy = touch.clientY - this._robotStartTouch.y;
-
-    if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
-      this.setData({ robotMoved: true });
-    }
-
-    const { screenWidth } = this.data;
-    const sysInfo = wx.getWindowInfo();
-    const btnSize = 44; // ~88rpx
-
-    let newX = this._robotOrigin.x + dx;
-    let newY = this._robotOrigin.y + dy;
-
-    // Boundary constraints
-    newX = Math.max(0, Math.min(newX, screenWidth - btnSize));
-    newY = Math.max(0, Math.min(newY, sysInfo.windowHeight - btnSize));
-
-    this.setData({ robotX: newX, robotY: newY });
-  },
-
-  onRobotTouchEnd() {
-    if (!this.data.robotMoved) {
-      wx.navigateTo({ url: '/pages/chat/chat' });
-    }
   }
 });

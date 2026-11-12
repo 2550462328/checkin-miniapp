@@ -527,44 +527,6 @@
   margin-top: -4rpx;
 }
 
-/* ============ 可拖拽AI机器人 ============ */
-.robot-btn {
-  position: fixed;
-  width: 88rpx;
-  height: 88rpx;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-  box-shadow: 0 6rpx 24rpx rgba(118, 75, 162, 0.5);
-}
-
-.robot-icon {
-  width: 48rpx;
-  height: 48rpx;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='8' width='16' height='12' rx='3'/%3E%3Ccircle cx='9' cy='14' r='1.5' fill='white' stroke='none'/%3E%3Ccircle cx='15' cy='14' r='1.5' fill='white' stroke='none'/%3E%3Cline x1='10' y1='17.5' x2='14' y2='17.5'/%3E%3Cline x1='12' y1='4' x2='12' y2='8'/%3E%3Ccircle cx='12' cy='3' r='1.2' fill='white' stroke='none'/%3E%3Cline x1='2' y1='13' x2='4' y2='13'/%3E%3Cline x1='20' y1='13' x2='22' y2='13'/%3E%3C/svg%3E");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.robotBreathing {
-  animation: robotBreathe 2s ease-in-out infinite;
-}
-
-@keyframes robotBreathe {
-  0%, 100% {
-    transform: scale(1);
-    box-shadow: 0 6rpx 24rpx rgba(118, 75, 162, 0.5);
-  }
-  50% {
-    transform: scale(1.08);
-    box-shadow: 0 8rpx 36rpx rgba(118, 75, 162, 0.7);
-  }
-}
-
 /* ============ 打卡弹窗 ============ */
 .modal-overlay {
   position: fixed;
